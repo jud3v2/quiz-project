@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil Quiz{% endblock %}
+
+{% block body %}
+    <style>
+        .wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    </style>
+
+    <div class="wrapper">
+        <h1 class="text-2xl">Quiz n° {{ number_of_question }}</h1>
+        <h1 class="text-2xl">{{ quiz_name }}</h1>
+            {% if start is defined %}
+            <div class="flex justify-center">
+                <a href="{{ path('get_quiz_and_question_number', {categorie: data.id, question: start, next: start + 1, end}) }}">START</a>
+            </div>
+             {% else %}
+                <div class="block">
+                    <h2 class="text-center text-2xl mt-5">{{ questions.question }}</h2>
+                    <div>
+                        <ul>
+                            {% for reponse in responses %}
+                                <div>
+                                    <input type="radio" id="{{ reponse.reponse }}" name="quiz"  value="{{ reponse.reponse }}">
+                                    <label for="{{ reponse.reponse }}">{{ reponse.reponse }}</label>
+                                </div>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div>
+                        <div>
+{#                            {% if next is same as end %}#}
+{#                                <a href="#">Fin du quiz</a>#}
+{#                            {% else %}#}
+                                <a href="{{ path('get_quiz_and_question_number', {
+                                    categorie: data.id,
+                                    question: next,
+                                    next: next + 1,
+                                    end
+                                }) }}">Question Suivante</a>
+{#                            {% endif %}#}
+                        </div>
+                    </div>
+                </div>
+             {% endif %}
+    </div>
+{% endblock %}
